@@ -3,7 +3,7 @@ import os
 # import six.moves.urllib as urllib
 import sys
 # import tarfile
-import tensorflow.compat.v1 as tf
+import tensorflow.compat.v1 as tf 
 tf.disable_v2_behavior()
 import zipfile
 import cv2
@@ -115,6 +115,7 @@ with detection_graph.as_default():
         
             image_np = cv2.putText(image_np, 'FPS {}'.format(int(1 / (time() - loop_time))), org, font,  
                    fontScale, color, thickness, cv2.LINE_AA) 
+            tf.image.crop_to_bounding_box(image_np, np.squeeze(boxes))
             cv2.imshow('4622 Project', image_np)
 
             loop_time = time()
