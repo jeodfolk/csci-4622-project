@@ -109,28 +109,27 @@ with detection_graph.as_default():
                 np.squeeze(classes).astype(np.int32),
                 np.squeeze(scores),
                 category_index,
+                max_boxes_to_draw=1,
                 use_normalized_coordinates=True,
                 min_score_thresh=0.1,
                 line_thickness=4)
-        
+            
+            im_height, im_width, _ = image_np.shape
+            ymin = boxes[0][0][0]*im_height
+            xmin = im_width - boxes[0][0][1]*im_width
+            ymax = boxes[0][0][2]*im_height
+            xmax = im_width - boxes[0][0][3]*im_width
+            
+            detected_char =  image_np[int(ymin):int(ymax), int(im_width-xmin):int(im_width-xmax)]
+            
             image_np = cv2.putText(image_np, 'FPS {}'.format(int(1 / (time() - loop_time))), org, font,  
                    fontScale, color, thickness, cv2.LINE_AA) 
-            
-            temp = [box for box in np.squeeze(boxes)]
-            
-            for i in range(len(temp)):
-                if i%2 == 0:
-                    temp[i] *= image_np[0]
-                else:
-                    temp[i] *= image_np[1]
            
-            tf.image.crop_to_bounding_box(image_np, temp[0], temp[1], temp[2], temp[3])
             cv2.imshow('4622 Project', image_np)
-
+            cv2.imshow('box', detected_char)
+            
             loop_time = time()
-            # plt.figure(figsize=IMAGE_SIZE)
-            # plt.imshow(image_np)    # matplotlib is configured for command line only so we save the outputs instead
-            # plt.savefig("outputs/detection_output{}.png".format(i))  # create an outputs folder for the images to be saved
+
             # Press "q" to quit
             if cv2.waitKey(1) == ord("q"):
                 cv2.destroyAllWindows()
