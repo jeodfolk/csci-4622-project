@@ -115,7 +115,16 @@ with detection_graph.as_default():
         
             image_np = cv2.putText(image_np, 'FPS {}'.format(int(1 / (time() - loop_time))), org, font,  
                    fontScale, color, thickness, cv2.LINE_AA) 
-            tf.image.crop_to_bounding_box(image_np, np.squeeze(boxes))
+            
+            temp = [box for box in np.squeeze(boxes)]
+            
+            for i in range(len(temp)):
+                if i%2 == 0:
+                    temp[i] *= image_np[0]
+                else:
+                    temp[i] *= image_np[1]
+           
+            tf.image.crop_to_bounding_box(image_np, temp[0], temp[1], temp[2], temp[3])
             cv2.imshow('4622 Project', image_np)
 
             loop_time = time()
