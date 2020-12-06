@@ -47,14 +47,13 @@ print(len(train_dataloader))
 
 start = time.time()
 epochs = 40
+
+all_losses = []
+total_loss = 0
+
+iter_n = 1
+n_iters = len(train_dataloader)*epochs
 for epoch in range(epochs):
-
-    all_losses = []
-    total_loss = 0
-
-    iter_n = 1
-    n_iters = len(train_dataloader)*epochs
-
     for batch_ind, sample in enumerate(train_dataloader):
         loss = trainer.train_step(sample)
         total_loss += loss
