@@ -6,15 +6,10 @@ import pickle
 
 class MoveClassifierTrainer:
     def __init__(self, device):
-        with open(path.join(path.dirname(__file__), 'class_dicts/idx_to_move.pkl'), 'rb') as f:
-            self.idx_to_move = pickle.load(f)
         self.device = device
         self.model = MoveClassifier(len(self.idx_to_move), device).to(device)
         self.criterion = nn.CrossEntropyLoss()
-        self.optim = torch.optim.Adam(self.model.parameters(), lr=0.0005)
-
-    def preprocess(self, sample):
-        return self.preprocessor(sample).to(self.device)
+        self.optim = torch.optim.Adam(self.model.parameters(), lr=0.00005)
 
     def train_step(self, sample):
         self.optim.zero_grad()
