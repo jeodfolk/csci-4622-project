@@ -30,8 +30,7 @@ PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
 # List of the strings that is used to add correct label for each box.
 PATH_TO_LABELS = os.path.join('training', 'object-detection.pbtxt')  # our labels are in training/object-detection.pbkt
 
-NUM_CLASSES = 19 # we only are using one class at the moment (mask at the time of edit)
-
+NUM_CLASSES = 19
 
 # ## Load a (frozen) Tensorflow model into memory.
 detection_graph = tf.Graph()
@@ -54,8 +53,6 @@ model = MoveClassifier(69, device).to(device)
 model.load(os.getcwd() + '/saved_models/2020_12_06_21_42_06')
 
 # ## Loading label map
-# Label maps map indices to category names, so that when our convolution network predicts `5`, we know that this corresponds to `airplane`.  
-# Here we use internal utility functions, but anything that returns a dictionary mapping integers to appropriate string labels would be fine
 label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
 categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES, use_display_name=True)
 category_index = label_map_util.create_category_index(categories)
@@ -70,6 +67,7 @@ iterr = 0
 img_iter = 0
 all_iter = 0
 
+#get emulator window handle
 windows = Desktop(backend="uia").windows()
 for i in windows:
     if i.window_text().startswith("GS"): 
