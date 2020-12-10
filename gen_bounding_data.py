@@ -121,13 +121,23 @@ def generate_bounds(character_path, example_idx):
             width_offset = stage_width - char_width
         
         print(char_width, char_height)
-        GenerateXML(str(example_idx), '', char_width, char_height, character, data_save_path, width_offset, height_offset, width_offset+char_width, height_offset-char_height)
-
+        xml = GenerateXML(str(example_idx), data_save_path, char_width, char_height, character, data_save_path, width_offset, height_offset+char_height, width_offset+char_width, height_offset)
+        xml.write(data_save_path +'/'+ str(example_idx) + ".xml")
+            
         # combine stage with character and crop to character's bounds
         stage_copy = stage.copy()
         stage_copy.paste(frame, (width_offset, height_offset), frame.convert('RGBA'))
         stage_copy.save("{}/{}.png".format(data_save_path, example_idx))
-
+        
+        #perform 20/80 split for test/train data
+        data_split = np.random.choice([True, False], p=[.20, .80])
+        if data_split:
+            xml.write(data_save_path + 'test/' + str(example_idx) + ".xml")
+            stage_copy.save("{}/test/{}.png".format(data_save_path, example_idx)) 
+        else:
+            xml.write(data_save_path + 'train/' + str(example_idx) + ".xml")
+            stage_copy.save("{}/train/{}.png".format(data_save_path, example_idx))
+            
         example_idx += 1
         if example_idx == num_examples:
             break
@@ -135,11 +145,17 @@ def generate_bounds(character_path, example_idx):
     return example_idx
 
 bounding_data_path = path.join(path.dirname(__file__), 'bounding_data')
-num_examples = 20 # number of training examples to generate
+num_examples = 400 # number of training examples to generate per character
 example_idx = 0
-for character in char_dir:
-    while example_idx < num_examples:
+
+char_itx = -1
+character = 'ryu'
+character_path = path.join(path.dirname(__file__), data_dir, 'characters', character)
+while (example_idx) < (num_examples*len(char_dir)):
+    if example_idx % num_examples == 0:
+        char_itx += 1
+        character = char_dir[char_itx]
         character_path = path.join(path.dirname(__file__), data_dir, 'characters', character)
-        data_save_path = path.join(bounding_data_path, character)
-        makedirs(data_save_path, exist_ok=True)
-        example_idx = generate_bounds(character_path, example_idx)
+    data_save_path = "C:/Users/joe/Documents/Visual Code/code/4622/tracking/models/research/object_detection/data/all_auto/"
+    makedirs(data_save_path, exist_ok=True)
+    example_idx = generate_bounds(character_path, example_idx)
