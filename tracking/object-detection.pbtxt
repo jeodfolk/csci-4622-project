@@ -1,0 +1,76 @@
+item {
+	id: 1
+	name: 'ryu'
+}
+item {
+	id: 2
+	name: 'chun-li'
+}
+item {
+	id: 3
+	name: 'hugo'
+}
+item {
+	id: 4
+	name: 'q'
+}
+item {
+	id: 5
+	name: 'akuma'
+}
+item {
+	id: 6
+	name: 'alex'
+}
+item {
+	id: 7
+	name: 'dudley'
+}
+item {
+	id: 8
+	name: 'elena'
+}
+item {
+	id: 9
+	name: 'ibuki'
+}
+item {
+	id: 10
+	name: 'ken'
+}
+item {
+	id: 11
+	name: 'makoto'
+}
+item {
+	id: 12
+	name: 'necro'
+}
+item {
+	id: 13
+	name: 'oro'
+}
+item {
+	id: 14
+	name: 'remy'
+}
+item {
+	id: 15
+	name: 'sean'
+}
+item {
+	id: 16
+	name: 'twelve'
+}
+item {
+	id: 17
+	name: 'urien'
+}
+item {
+	id: 18
+	name: 'yang'
+}
+item {
+	id: 19
+	name: 'yun'
+}
