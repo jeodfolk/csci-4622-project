@@ -11,9 +11,9 @@ xml_to_csv.py: convert xml labels to csv
 
 crop_img.py: returns coordinates to the bounding box locations of inputted png
 
-python generate_tfrecord.py --csv_input={INSERT TEST CSV DIRECTORY}/ryu.csv --output_path={INSERT TEST DATA DIRECTORY}/test.record --image_dir={INSERT IMAGE DIRECTORY}
+python generate_tfrecord.py --csv_input={INSERT TEST CSV DIRECTORY} --output_path={INSERT TEST DATA DIRECTORY}/test.record --image_dir={INSERT IMAGE DIRECTORY}
 
-python generate_tfrecord.py --csv_input={INSERT TRAIN CSV DIRECTORY}/ryu.csv --output_path={INSERT TRAINING DATA DIRECTORY}/train.record --image_dir={INSERT IMAGE DIRECTORY}
+python generate_tfrecord.py --csv_input={INSERT TRAIN CSV DIRECTORY} --output_path={INSERT TRAINING DATA DIRECTORY}/train.record --image_dir={INSERT IMAGE DIRECTORY}
 
 python train.py --train_dir=training/ --pipeline_config_path=training/ssd_mobilenet_v1_coco.config --logtostderr
 
