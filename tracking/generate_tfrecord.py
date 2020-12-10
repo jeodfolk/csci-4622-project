@@ -32,8 +32,44 @@ FLAGS = flags.FLAGS
 
 # replace row_label with the name you annotated your images as
 def class_text_to_int(row_label):
-    if row_label == 'Ryu':
+    if row_label == 'ryu':
         return 1
+    elif row_label == 'chun-li':
+        return 2
+    elif row_label == 'hugo':
+        return 3
+    elif row_label == 'q':
+        return 4
+    elif row_label == 'akuma':
+        return 5
+    elif row_label == 'alex':
+        return 6
+    elif row_label == 'dudley':
+        return 7
+    elif row_label == 'elena':
+        return 8
+    elif row_label == 'ibuki':
+        return 9
+    elif row_label == 'ken':
+        return 10
+    elif row_label == 'makoto':
+        return 11
+    elif row_label == 'necro':
+        return 12
+    elif row_label == 'oro':
+        return 13
+    elif row_label == 'remy':
+        return 14
+    elif row_label == 'sean':
+        return 15
+    elif row_label == 'twelve':
+        return 16
+    elif row_label == 'urien':
+        return 17
+    elif row_label == 'yang':
+        return 18
+    elif row_label == 'yun':
+        return 19
     else:
         None
 
@@ -46,13 +82,13 @@ def split(df, group):
 
 def create_tf_example(group, path):
     with tf.gfile.GFile(os.path.join(path, '{}'.format(group.filename)), 'rb') as fid:
-        encoded_jpg = fid.read()
-    encoded_jpg_io = io.BytesIO(encoded_jpg)
-    image = Image.open(encoded_jpg_io)
+        encoded_png = fid.read()
+    encoded_png_io = io.BytesIO(encoded_png)
+    image = Image.open(encoded_png_io)
     width, height = image.size
 
     filename = group.filename.encode('utf8')
-    image_format = b'jpg'
+    image_format = b'png'
     xmins = []
     xmaxs = []
     ymins = []
@@ -73,7 +109,7 @@ def create_tf_example(group, path):
         'image/width': dataset_util.int64_feature(width),
         'image/filename': dataset_util.bytes_feature(filename),
         'image/source_id': dataset_util.bytes_feature(filename),
-        'image/encoded': dataset_util.bytes_feature(encoded_jpg),
+        'image/encoded': dataset_util.bytes_feature(encoded_png),
         'image/format': dataset_util.bytes_feature(image_format),
         'image/object/bbox/xmin': dataset_util.float_list_feature(xmins),
         'image/object/bbox/xmax': dataset_util.float_list_feature(xmaxs),
